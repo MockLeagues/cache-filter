@@ -6,6 +6,14 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Add cache headers to responses
+ *
+ * init-param configuration:
+ *
+ * cache-control : private|public
+ * ttl : time to live in seconds
+ */
 public class CacheHeaderFilter implements Filter {
 
     public static final String CACHE_CONTROL = "cache-control";
@@ -50,7 +58,8 @@ public class CacheHeaderFilter implements Filter {
 
     private void verifyConfiguration(String cacheControl, String ttl) throws ServletException {
         if (cacheControl == null || ttl == null) {
-            throw new ServletException("CacheHeaderFilter not configured correctly");
+            throw new ServletException("CacheHeaderFilter not configured correctly - " +
+                    "please specify cache-control (public or private) and ttl (seconds) filter init parameters");
         }
     }
 
